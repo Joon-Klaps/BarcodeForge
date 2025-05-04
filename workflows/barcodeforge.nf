@@ -52,7 +52,7 @@ workflow BARCODEFORGE {
     FATOVCF(alignment)
 
     FORMAT_TREE(
-        FATOVCF.out.vcf,
+        params.tree_file,
         params.tree_file_format,
     )
 
