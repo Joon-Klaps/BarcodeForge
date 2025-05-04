@@ -13,7 +13,7 @@ process FATOVCF {
     script:
     def args = task.ext.args ?: ''
     """
-    fatovcf ${args} ${alignment} aligned.vcf
+    faToVcf ${args} ${alignment} aligned.vcf
     """
 
     stub:
