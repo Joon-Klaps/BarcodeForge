@@ -107,19 +107,16 @@ def checkCondaChannels() {
     def required_channels_in_order = ['conda-forge', 'bioconda']
     def channels_missing = ((required_channels_in_order as Set) - (channels as Set)) as Boolean
 
-    // Check that they are in the right order
-    def channel_priority_violation = required_channels_in_order != channels.findAll { ch -> ch in required_channels_in_order }
-
-    if (channels_missing | channel_priority_violation) {
+    if (channels_missing) {
         log.warn(
             """\
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
             There is a problem with your Conda configuration!
             You will need to set-up the conda-forge and bioconda channels correctly.
             Please refer to https://bioconda.github.io/
-            The observed channel order is
+            The observed channels are:
             ${channels}
-            but the following channel order is required:
+            but the following channels are required:
             ${required_channels_in_order}
         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
         """.stripIndent(true)
