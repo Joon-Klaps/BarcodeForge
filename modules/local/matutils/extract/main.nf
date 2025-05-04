@@ -26,7 +26,7 @@ process MATUTILS_EXTRACT {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        matutils: \$(matutils version 2>&1)
+        usher: \$(usher --version 2>&1)
     END_VERSIONS
     """
 
@@ -36,7 +36,7 @@ process MATUTILS_EXTRACT {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        matutils: \$(matutils version 2>&1)
+        usher: \$(usher --version 2>&1)
     END_VERSIONS
     """
 }
