@@ -24,6 +24,10 @@ jobs:
           python-version: '3.13'
       - name: Install dependencies
         run: pip install nf-core
+      - name: Setup nextflow
+        uses: nf-core/setup-nextflow@v2
+        with:
+          version: ${{ env.NXF_VER }}
       - name: Run lint
         run: |
           nf-core pipelines schema lint nextflow_schema.json
