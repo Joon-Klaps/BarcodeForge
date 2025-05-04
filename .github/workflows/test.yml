@@ -1,11 +1,9 @@
 name: Test nextflow pipeline
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
   process_sra:
@@ -19,13 +17,11 @@ jobs:
     steps:
       - name: Free disk space
         run: |
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
-          sudo rm -rf /usr/local/lib/android
+          sudo rm -rf /usr/share/dotnet "$AGENT_TOOLSDIRECTORY" /usr/local/lib/android
           sudo docker image prune --all --force || true
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Cache envs
+      - name: Cache environment
         id: cache-envs
         uses: actions/cache@v4
         with:
@@ -35,8 +31,7 @@ jobs:
           key: env-${{ env.NXF_VER }}
           restore-keys: |
             env-${{ env.NXF_VER }}
-            env-
-      - name: Setup for conda
+      - name: Setup Conda
         uses: conda-incubator/setup-miniconda@v3
         with:
           python-version: 3.11
@@ -44,13 +39,11 @@ jobs:
           channels: conda-forge,bioconda,nodefaults
           channel-priority: true
           activate-environment: anaconda-client-env
-      - name: Setup nextflow
+      - name: Setup Nextflow
         uses: nf-core/setup-nextflow@v2
         with:
           version: ${{ env.NXF_VER }}
-      - name: Run nextflow
+      - name: Run Nextflow tests
         run: make test
-
-      - name: Lint check for Schema
-        run: |
-          nf-core pipelines schema lint
+      - name: Lint schema
+        run: nf-core pipelines schema lint
