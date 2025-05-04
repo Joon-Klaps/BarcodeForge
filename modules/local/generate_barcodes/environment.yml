@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11.4
+  - pip:
+      - pandas==2.2.3
+      - altair==5.5.0
