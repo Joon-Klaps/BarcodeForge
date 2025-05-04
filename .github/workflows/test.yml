@@ -5,45 +5,41 @@ on:
   pull_request:
     branches: [ main ]
 
-jobs:
-  process_sra:
-    runs-on: ubuntu-22.04
-    defaults:
+env:
+  NXF_VER: "24.10.6"
+  NXF_WORK: ${{ github.workspace }}/work
+
+defaults:
       run:
         shell: bash -el {0}
-    env:
-      NXF_VER: "24.10.6"
-      NXF_WORK: ${{ github.workspace }}/work
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Free disk space
-        run: |
-          sudo rm -rf /usr/share/dotnet "$AGENT_TOOLSDIRECTORY" /usr/local/lib/android
-          sudo docker image prune --all --force || true
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Cache environment
-        id: cache-envs
-        uses: actions/cache@v4
+      - uses: actions/setup-python@v5
         with:
-          path: |
-            ${{ env.NXF_WORK }}/conda
-            /opt/hostedtoolcache/nextflow/${{ env.NXF_VER }}
-          key: env-${{ env.NXF_VER }}
-          restore-keys: |
-            env-${{ env.NXF_VER }}
-      - name: Setup Conda
-        uses: conda-incubator/setup-miniconda@v3
-        with:
-          python-version: 3.11
-          mamba-version: "*"
-          channels: conda-forge,bioconda,nodefaults
-          channel-priority: true
-          activate-environment: anaconda-client-env
-      - name: Setup Nextflow
-        uses: nf-core/setup-nextflow@v2
-        with:
-          version: ${{ env.NXF_VER }}
-      - name: Run Nextflow tests
-        run: make test
-      - name: Lint schema
-        run: nf-core pipelines schema lint
+          python-version: '3.13'
+          cache: 'pip'
+      - name: Install dependencies
+        run: pip install nf-core
+      - name: Run lint
+        run: |
+          nf-core pipelines schema lint nextflow_schema.json
+
+  test:
+    strategy:
+      matrix:
+        tree_format: ["newick", "nexus"]
+      fail-fast: false
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: ./.github/actions/install-dependencies
+      - name: Run test ${{ matrix.tree_format }}
+        run: |
+          make run-test-${{ matrix.tree_format }}
+
