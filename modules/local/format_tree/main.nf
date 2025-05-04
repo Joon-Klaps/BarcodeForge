@@ -1,4 +1,10 @@
 process FORMAT_TREE {
+    tag "format_tree"
+    label "process_medium"
+
+    conda "${moduleDir}/environment.yml"
+
+
     input:
     path tree_file
     val tree_file_format
