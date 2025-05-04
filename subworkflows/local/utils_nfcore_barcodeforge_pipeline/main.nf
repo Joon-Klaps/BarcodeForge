@@ -49,6 +49,7 @@ workflow PIPELINE_INITIALISATION {
             params.lineages,
             params.tree_file,
             params.fasta,
+            params.tree_file_format,
         )
     }
 

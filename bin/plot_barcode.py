@@ -7,6 +7,10 @@ import pandas as pd
 import argparse
 import math
 
+def sortFun(x):
+    # sort based on nuc position, ignoring nuc identities
+    return int(x[1:(len(x)-1)])
+
 
 def plot(barcode, output_filename):
     # Map 0/1 to labels for discrete presence/absence
@@ -26,7 +30,7 @@ def plot(barcode, output_filename):
         stroke='#FFFFFF', strokeWidth=0,
     ).encode(
         y='Lineage:O',
-        x=alt.X('Mutation:O', axis=alt.Axis(labels=False, tickSize=0)),
+        x=alt.X('Mutation:O', sort=None, axis=alt.Axis(labels=False, tickSize=0)),
         color=alt.Color(
             'Presence:N',
             scale=alt.Scale(domain=["Absent", "Present"], range=['#FFFFFF', '#000000']),
@@ -43,7 +47,7 @@ def plot(barcode, output_filename):
         stroke='#BBB', strokeWidth=0.25
     ).encode(
         y='Lineage:O',
-        x=alt.X('Mutation:O', axis=alt.Axis(labels=True, labelAngle=45)),
+        x=alt.X('Mutation:O', sort=None, axis=alt.Axis(labels=True, labelAngle=45)),
         color=alt.Color(
             'Presence:N',
             scale=alt.Scale(domain=["Absent", "Present"], range=['#FFFFFF', '#000000']),

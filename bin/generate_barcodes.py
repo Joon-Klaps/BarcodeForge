@@ -185,6 +185,9 @@ def main():
     df_barcodes = reversion_checking(df_barcodes)
     df_barcodes = check_mutation_chain(df_barcodes)
     df_barcodes = replace_underscore_with_dash(df_barcodes)
+    # sort the columns by the number between the first and last character
+    df_barcodes = df_barcodes.reindex(sorted(df_barcodes.columns,
+                                             key=sortFun), axis=1)
     df_barcodes.to_csv(args.output)
     test_no_flip_pairs(args.output)
 

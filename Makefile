@@ -3,7 +3,7 @@
 .PHONY: clean md5sum test run-test
 
 clean:
-	rm -rf work/ testing/output .nextflow.log* .nextflow/
+	rm -rf work/ results .nextflow.log* .nextflow/
 
 md5sum:
 	bash assets/test/md5.sh

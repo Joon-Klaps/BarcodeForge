@@ -1,7 +1,5 @@
 {
-    "fasta": "${projectDir}/assets/test/input/sequences.fasta",
-    "is_aligned": false,
-    "alignment_tool": "minimap2",
+    "alignment": "${projectDir}/assets/test/input/aligned.fasta",
     "reference_genome": "${projectDir}/assets/test/input/reference.fasta",
     
     "tree_file": "${projectDir}/assets/test/input/tree.nwk",

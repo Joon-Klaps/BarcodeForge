@@ -8,6 +8,7 @@ process VALIDATE {
     path lineages
     path tree_file
     path fasta
+    val tree_file_format
 
     output:
     path 'versions.yml', emit: versions
@@ -17,7 +18,8 @@ process VALIDATE {
     validate.py \\
         --lineage ${lineages} \\
         --fasta ${fasta} \\
-        --tree ${tree_file}
+        --tree ${tree_file} \\
+        --tree_format ${tree_file_format}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

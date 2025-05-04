@@ -39,18 +39,9 @@
         "reference_genome": {
           "type": "string"
         },
-        "is_aligned": {
-          "type": "boolean",
-          "fa_icon": "fas fa-toggle-off"
-        },
-        "fasta": {
+        "alignment": {
           "type": "string",
           "fa_icon": "fas fa-stream"
-        },
-        "alignment_tool": {
-          "type": "string",
-          "default": "minimap2",
-          "fa_icon": "fas fa-tools"
         }
       },
       "required": ["reference_genome", "fasta"]
