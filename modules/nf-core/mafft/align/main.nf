@@ -1,5 +1,5 @@
-process MINIMAP2_ALIGN {
-    tag "minimap2"
+process MAFFT_ALIGN {
+    tag "mafft_align"
     label "process_medium"
 
     conda "${moduleDir}/environment.yml"
@@ -10,23 +10,23 @@ process MINIMAP2_ALIGN {
 
     output:
     path "aligned.fasta", emit: alignment
-    path "versions.yml", emit: versions
+    path 'versions.yml', emit: versions
 
     script:
     def args = task.ext.args ?: ''
-    def args2 = task.ext.args2 ?: ''
     """
-    minimap2 \\
+    mafft \\
+        --auto \\ 
+        --thread ${task.cpus} \\
         ${args} \\
-        -t ${task.cpus} \\
-        -a ${reference_genome} \\
-        ${fasta} | \\
-        gofasta sam toMultiAlign ${args2} > aligned.fasta
+        --addfragments \\
+        ${fasta} \\
+        ${reference_genome} \\
+        > aligned.fasta
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        minimap2: \$(minimap2 --version 2>&1)
-        gofasta: \$(gofasta --version 2>&1)
+        mafft: \$(mafft --version 2>&1 | sed 's/^v//' | sed 's/ (.*)//')
     END_VERSIONS
     """
 
@@ -36,8 +36,7 @@ process MINIMAP2_ALIGN {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        minimap2: \$(minimap2 --version 2>&1)
-        gofasta: \$(gofasta --version 2>&1)
+        mafft: \$(mafft --version 2>&1 | sed 's/^v//' | sed 's/ (.*)//')
     END_VERSIONS
     """
 }

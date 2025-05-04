@@ -4,7 +4,8 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { MINIMAP2_ALIGN } from '../modules/nf-core/minimap2/align/main'
+include { MINIMAP2_ALIGN } from '../modules/nf-core/minimap2/align/main.nf'
+include { MAFFT_ALIGN } from '../modules/nf-core/mafft/align/main.nf'
 include { FATOVCF } from '../modules/local/faToVcf/main.nf'
 include { USHER } from '../modules/local/usher/main.nf'
 include { MATUTILS_ANNOTATE } from '../modules/local/matutils/annotate/main.nf'
@@ -29,9 +30,19 @@ workflow BARCODEFORGE {
     if (params.is_aligned) {
         alignment = params.fasta
     }
+    else if (params.alignment_tool == "mafft") {
+        MAFFT_ALIGN(params.fasta, params.reference_genome)
+        alignment = MAFFT_ALIGN.out.alignment
+        ch_versions = ch_versions.mix(
+            MAFFT_ALIGN.out.versions,
+        )
+    }
     else if (params.alignment_tool == "minimap2") {
         MINIMAP2_ALIGN(params.fasta, params.reference_genome)
         alignment = MINIMAP2_ALIGN.out.alignment
+        ch_versions = ch_versions.mix(
+            MINIMAP2_ALIGN.out.versions,
+        )
     }
     else {
         println("The alignment tool ${params.alignment_tool} is not supported. Please specify 'minimap2'.")
@@ -66,7 +77,7 @@ workflow BARCODEFORGE {
     GENERATE_BARCODES(ADD_REF_MUTS.out.modified_lineage_paths, params.barcode_prefix)
 
     ch_versions = ch_versions.mix(
-        MINIMAP2_ALIGN.out.versions,
+        FORMAT_TREE.out.versions,
         USHER.out.versions,
         MATUTILS_ANNOTATE.out.versions,
         MATUTILS_EXTRACT.out.versions,
