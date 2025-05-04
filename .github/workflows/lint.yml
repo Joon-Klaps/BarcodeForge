@@ -1,4 +1,4 @@
-name: Test nextflow pipeline
+name: Lint nextflow pipeline
 on:
   push:
     branches: [ main ]
@@ -14,17 +14,16 @@ defaults:
         shell: bash -el {0}
 
 jobs:
-  test:
-    strategy:
-      matrix:
-        tree_format: ["newick", "nexus"]
-      fail-fast: false
+  lint:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - uses: ./.github/actions/install-dependencies
-      - name: Run test ${{ matrix.tree_format }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install dependencies
+        run: pip install nf-core
+      - name: Run lint
         run: |
-          make run-test-${{ matrix.tree_format }}
-
+          nf-core pipelines schema lint nextflow_schema.json
