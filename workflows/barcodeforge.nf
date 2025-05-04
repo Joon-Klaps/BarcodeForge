@@ -11,6 +11,7 @@ include { MATUTILS_ANNOTATE } from '../modules/local/matutils/annotate/main.nf'
 include { MATUTILS_EXTRACT } from '../modules/local/matutils/extract/main.nf'
 include { ADD_REF_MUTS } from '../modules/local/add_ref_muts/main.nf'
 include { GENERATE_BARCODES } from '../modules/local/generate_barcodes/main.nf'
+include { FORMAT_TREE } from '../modules/local/format_tree/main.nf'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -39,7 +40,12 @@ workflow BARCODEFORGE {
 
     FATOVCF(alignment)
 
-    USHER(params.tree_file, FATOVCF.out.vcf)
+    FORMAT_TREE(
+        FATOVCF.out.vcf,
+        params.tree_file_format,
+    )
+
+    USHER(FORMAT_TREE.out.formatted_tree, FATOVCF.out.vcf)
 
     MATUTILS_ANNOTATE(
         USHER.out.protobuf_tree,
