@@ -48,7 +48,7 @@ workflow PIPELINE_INITIALISATION {
         VALIDATE(
             params.lineages,
             params.tree_file,
-            params.fasta,
+            params.alignment,
             params.tree_file_format,
         )
     }
