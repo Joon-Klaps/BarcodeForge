@@ -18,13 +18,13 @@ jobs:
     strategy:
       matrix:
         tree_format: ["newick", "nexus"]
+        profile: ["mamba", "conda"]
       fail-fast: false
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
       - uses: ./.github/actions/install-dependencies
-      - name: Run test ${{ matrix.tree_format }}
+      - name: Run test ${{ matrix.tree_format }} ${{ matrix.profile }}
         run: |
-          make run-test-${{ matrix.tree_format }}
-
+          nextflow run main.nf -profile test,${{ matrix.profile }} -params-file assets/test/input/params_${{ matrix.tree_format }}.json

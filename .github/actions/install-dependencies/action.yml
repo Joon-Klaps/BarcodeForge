@@ -20,7 +20,7 @@ runs:
           ${{ env.CONDA }}/envs
         key: env-${{ env.NXF_VER }}-${{ github.job }}-${{ matrix.tree_format }}
         restore-keys: |
-          env-${{ env.NXF_VER }}-${{ github.job }}-${{ matrix.tree_format }}
+          env-${{ env.NXF_VER }}-${{ github.job }}-${{ matrix.tree_format }}-${{ matrix.profile }}
           env-${{ env.NXF_VER }}
           env-
     - name: Setup for conda
