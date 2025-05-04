@@ -49,4 +49,8 @@ jobs:
         with:
           version: ${{ env.NXF_VER }}
       - name: Run nextflow
-        run: nextflow run main.nf -profile test,mamba -params-file assets/test/input/params.json
+        run: make test
+
+      - name: Lint check for Schema
+        run: |
+          nf-core pipelines schema lint

@@ -1,0 +1,13 @@
+{
+    "fasta": "${projectDir}/assets/test/input/sequences.fasta",
+    "is_aligned": false,
+    "alignment_tool": "mafft",
+    "reference_genome": "${projectDir}/assets/test/input/reference.fasta",
+    
+    "tree_file": "${projectDir}/assets/test/input/tree.nexus",
+    "tree_file_format": "newick",
+    "lineages": "${projectDir}/assets/test/input/lineages.tsv",
+    "barcode_prefix": "RSVa",
+
+    "outdir": "results"
+}
