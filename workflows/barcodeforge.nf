@@ -4,13 +4,13 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { FATOVCF } from '../modules/local/faToVcf/main.nf'
-include { USHER } from '../modules/local/usher/main.nf'
-include { MATUTILS_ANNOTATE } from '../modules/local/matutils/annotate/main.nf'
-include { MATUTILS_EXTRACT } from '../modules/local/matutils/extract/main.nf'
-include { ADD_REF_MUTS } from '../modules/local/add_ref_muts/main.nf'
-include { GENERATE_BARCODES } from '../modules/local/generate_barcodes/main.nf'
-include { FORMAT_TREE } from '../modules/local/format_tree/main.nf'
+include { FATOVCF                } from '../modules/local/faToVcf/main.nf'
+include { USHER                  } from '../modules/local/usher/main.nf'
+include { MATUTILS_ANNOTATE      } from '../modules/local/matutils/annotate/main.nf'
+include { MATUTILS_EXTRACT       } from '../modules/local/matutils/extract/main.nf'
+include { ADD_REF_MUTS           } from '../modules/local/add_ref_muts/main.nf'
+include { GENERATE_BARCODES      } from '../modules/local/generate_barcodes/main.nf'
+include { FORMAT_TREE            } from '../modules/local/format_tree/main.nf'
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW

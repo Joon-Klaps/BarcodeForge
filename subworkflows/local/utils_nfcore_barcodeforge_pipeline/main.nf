@@ -9,10 +9,10 @@
 */
 
 
-include { completionSummary } from '../../nf-core/utils_nfcore_pipeline'
-include { UTILS_NFCORE_PIPELINE } from '../../nf-core/utils_nfcore_pipeline'
+include { completionSummary       } from '../../nf-core/utils_nfcore_pipeline'
+include { UTILS_NFCORE_PIPELINE   } from '../../nf-core/utils_nfcore_pipeline'
 include { UTILS_NEXTFLOW_PIPELINE } from '../../nf-core/utils_nextflow_pipeline'
-include { VALIDATE } from '../../../modules/local/validate'
+include { VALIDATE                } from '../../../modules/local/validate'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -22,10 +22,10 @@ include { VALIDATE } from '../../../modules/local/validate'
 
 workflow PIPELINE_INITIALISATION {
     take:
-    version // boolean: Display version and exit
-    validate_params // boolean: Boolean whether to validate parameters against the schema at runtime
+    version           // boolean: Display version and exit
+    validate_params   // boolean: Boolean whether to validate parameters against the schema at runtime
     nextflow_cli_args //   array: List of positional nextflow CLI args
-    outdir //  string: The output directory where the results will be saved
+    outdir            //  string: The output directory where the results will be saved
 
     main:
 
