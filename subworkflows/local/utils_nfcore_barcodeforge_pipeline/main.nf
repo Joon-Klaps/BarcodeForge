@@ -46,9 +46,9 @@ workflow PIPELINE_INITIALISATION {
     //
     if (validate_params) {
         VALIDATE(
-            params.lineages,
-            params.tree_file,
-            params.alignment,
+            Channel.fromPath(params.lineages, checkIfExists:true),
+            Channel.fromPath(params.tree_file, checkIfExists:true),
+            Channel.fromPath(params.alignment, checkIfExists:true),
             params.tree_file_format,
         )
     }
@@ -61,7 +61,7 @@ workflow PIPELINE_INITIALISATION {
     )
 
     emit:
-    versions = ch_versions
+    versions  = ch_versions
 }
 
 /*

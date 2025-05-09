@@ -12,7 +12,7 @@
       "default": "",
       "properties": {
         "tree_file": {
-          "type": "string",
+          "type": "file-path",
           "description": "Path to the phylogenetic tree file (supports Newick and Nexus formats).",
           "fa_icon": "fas fa-tree"
         },
@@ -23,8 +23,8 @@
           "enum": ["newick", "nexus"]
         },
         "lineages": {
-          "type": "string",
-          "description": "Path to the TSV file containing lineage definitions."
+          "type": "file-path",
+          "description": "two-column tsv file with lineage assignment, clades in the first column and sample identifiers in the second"
         },
         "barcode_prefix": {
           "type": "string",
@@ -42,11 +42,11 @@
       "default": "",
       "properties": {
         "reference_genome": {
-          "type": "string",
+          "type": "file-path",
           "description": "Path to the reference genome file used for alignment."
         },
         "alignment": {
-          "type": "string",
+          "type": "file-path",
           "description": "Path to the aligned FASTA file required for barcode generation.",
           "fa_icon": "fas fa-stream"
         }

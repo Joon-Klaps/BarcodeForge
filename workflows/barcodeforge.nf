@@ -22,10 +22,11 @@ workflow BARCODEFORGE {
 
     ch_versions = Channel.empty()
 
-    FATOVCF(params.alignment)
+    FATOVCF(Channel.fromPath(params.alignment, checkIfExists: true))
+        .set { ch_faToVcf_versions }
 
     FORMAT_TREE(
-        params.tree_file,
+        Channel.fromPath(params.tree_file, checkIfExists: true),
         params.tree_file_format,
     )
 
@@ -33,7 +34,7 @@ workflow BARCODEFORGE {
 
     MATUTILS_ANNOTATE(
         USHER.out.protobuf_tree,
-        params.lineages,
+        Channel.fromPath(params.lineages, checkIfExists: true),
     )
 
     MATUTILS_EXTRACT(
@@ -41,10 +42,10 @@ workflow BARCODEFORGE {
     )
 
     ADD_REF_MUTS(
-        params.reference_genome,
+        Channel.fromPath(params.reference_genome, checkIfExists: true),
         MATUTILS_EXTRACT.out.sample_paths_file,
         MATUTILS_EXTRACT.out.lineage_definition_file,
-        params.alignment,
+        Channel.fromPath(params.alignment, checkIfExists: true),
     )
 
     GENERATE_BARCODES(ADD_REF_MUTS.out.modified_lineage_paths, params.barcode_prefix)
