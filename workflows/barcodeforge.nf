@@ -35,6 +35,7 @@ workflow BARCODEFORGE {
     MATUTILS_ANNOTATE(
         USHER.out.protobuf_tree,
         Channel.fromPath(params.lineages, checkIfExists: true),
+        params.matUtils_overlap,
     )
 
     MATUTILS_EXTRACT(
